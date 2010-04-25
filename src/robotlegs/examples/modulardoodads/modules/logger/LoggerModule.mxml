@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Module xmlns:fx="http://ns.adobe.com/mxml/2009" 
+           xmlns:s="library://ns.adobe.com/flex/spark"  
+           xmlns:mx="library://ns.adobe.com/flex/mx"
+           implements="org.robotlegs.utilities.modular.core.IModule"
+           layout="absolute" width="100%">
+    <fx:Script>
+        <![CDATA[
+            import org.robotlegs.core.IContext;
+            import org.robotlegs.core.IInjector;
+            import org.robotlegs.utilities.modular.core.IModule;
+            
+            protected var context:IContext;
+            
+            [Bindable]
+            public var messages:String = "";
+            
+            public function addLoggingMessage(message:String):void
+            {
+                if(messages)
+                    messages += "\r";
+                messages += message;
+                messageDisplay.validateNow();
+                messageDisplay.scroller.verticalScrollBar.value = messageDisplay.scroller.verticalScrollBar.maximum;
+            }
+            
+            /**
+             * We need to initialize our context by setting the parent
+             * injector for the module. This is actually injected by the
+             * shell, so no need to worry about it!
+            */
+            [Inject]
+            public function set parentInjector(value:IInjector):void
+            {
+                context = new LoggerModuleContext(this, value);
+            }
+            
+        ]]>
+    </fx:Script>
+    <fx:Declarations>
+        <!-- Place non-visual elements (e.g., services, value objects) here -->
+    </fx:Declarations>
+    <s:TextArea id="messageDisplay" text="{messages}"/>
+</mx:Module>
