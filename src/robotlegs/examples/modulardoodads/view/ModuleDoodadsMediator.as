@@ -13,12 +13,7 @@ package robotlegs.examples.modulardoodads.view
         
         override public function onRegister():void
         {
-            eventMap.mapListener(view.logIt, MouseEvent.CLICK, handleLogItClicked);
-        }
-        
-        protected function handleLogItClicked(event:MouseEvent):void
-        {
-            redispatchToModules(new LoggingEvent(LoggingEvent.MESSAGE, "SHIT BALLS!", null));
+            eventMap.mapListener(view, LoggingEvent.MESSAGE, redispatchToModules);
         }
     }
 }

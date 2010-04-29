@@ -10,6 +10,8 @@
             import org.robotlegs.core.IInjector;
             import org.robotlegs.utilities.modular.core.IModule;
             
+            import robotlegs.examples.modulardoodads.modules.logger.skins.LoggingTextArea;
+            
             protected var context:IContext;
             
             [Bindable]
@@ -40,5 +42,5 @@
     <fx:Declarations>
         <!-- Place non-visual elements (e.g., services, value objects) here -->
     </fx:Declarations>
-    <s:TextArea id="messageDisplay" text="{messages}"/>
+    <s:TextArea id="messageDisplay" width="100%" text="{messages}" skinClass="robotlegs.examples.modulardoodads.modules.logger.skins.LoggingTextArea"/>
 </mx:Module>

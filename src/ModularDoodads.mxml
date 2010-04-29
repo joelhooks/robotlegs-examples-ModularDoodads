@@ -2,13 +2,30 @@
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
                xmlns:s="library://ns.adobe.com/flex/spark" 
                xmlns:mx="library://ns.adobe.com/flex/mx"
-               xmlns:modulardoodads="robotlegs.examples.modulardoodads.*" xmlns:logger="robotlegs.examples.modulardoodads.modules.logger.*">
+               xmlns:modulardoodads="robotlegs.examples.modulardoodads.*" 
+               xmlns:logger="robotlegs.examples.modulardoodads.modules.logger.*" 
+               width="400">
+
+    <fx:Script>
+        <![CDATA[
+            import robotlegs.examples.modulardoodads.common.events.LoggingEvent;
+            protected function logIt_clickHandler(event:Event):void
+            {
+                dispatchEvent(new LoggingEvent(LoggingEvent.MESSAGE, logText.text));
+                logText.text = "";
+            }
+        ]]>
+    </fx:Script>
+
     <fx:Declarations>
         <modulardoodads:ModularDoodadsContext contextView="{this}"/>
     </fx:Declarations>
     <s:layout>
-        <s:VerticalLayout/>
+        <s:VerticalLayout paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5"/>
     </s:layout>
-    <s:Button id="logIt" label="LOG IT!"/>
+    <s:HGroup width="100%">
+        <s:Button id="logIt" label="LOG IT!" click="logIt_clickHandler(event)" enabled="{logText.text.length &gt;0}"/>
+        <s:TextInput id="logText" width="100%" enter="logIt_clickHandler(event)"/>
+    </s:HGroup>
     <logger:LoggerModule/>
 </s:Application>
