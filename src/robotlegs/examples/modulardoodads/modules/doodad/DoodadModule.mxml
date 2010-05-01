@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Module xmlns:fx="http://ns.adobe.com/mxml/2009" 
+           xmlns:s="library://ns.adobe.com/flex/spark" implements="org.robotlegs.utilities.modular.core.IModule"
+           xmlns:mx="library://ns.adobe.com/flex/mx" layout="absolute" width="100" height="100">
+
+    <fx:Declarations>
+        <!-- Place non-visual elements (e.g., services, value objects) here -->
+    </fx:Declarations>
+    <fx:Script>
+        <![CDATA[
+            import mx.core.IVisualElementContainer;
+            
+            import org.robotlegs.core.IContext;
+            import org.robotlegs.core.IInjector;
+            import org.robotlegs.utilities.modular.core.IModule;
+            import org.robotlegs.utilities.modular.core.IModuleContext;
+            
+            import robotlegs.examples.modulardoodads.modules.doodad.events.DoodadModuleEvent;
+            
+            [Bindable]
+            public var color:uint = 0x000000;
+            
+            protected var context:IModuleContext;
+            
+            /**
+             * We need to initialize our context by setting the parent
+             * injector for the module. This is actually injected by the
+             * shell, so no need to worry about it!
+             */
+            [Inject]
+            public function set parentInjector(value:IInjector):void
+            {
+                context = new DoodadModuleContext(this,value);
+            }
+            
+            protected function doStuff_clickHandler(event:MouseEvent):void
+            {
+                dispatchEvent(new DoodadModuleEvent(DoodadModuleEvent.DO_STUFF_REQUESTED));
+            }
+
+            protected function killModule_clickHandler(event:MouseEvent):void
+            {
+                dispatchEvent(new DoodadModuleEvent(DoodadModuleEvent.REMOVE));
+            }
+            
+            public function dispose():void
+            {
+                if(parent && parent.contains(this))
+                    IVisualElementContainer(parent).removeElement(this);
+                context.dispose();
+                context = null;           
+            }
+
+        ]]>
+    </fx:Script>
+    <s:Group width="100%" height="100%">
+        <s:Rect width="100%" height="100%">
+            <s:fill>
+                <s:SolidColor color="{color}"/>
+            </s:fill>
+        </s:Rect>
+    </s:Group>
+    <s:Button id="killModule" label="x" right="2" top="2" width="30" click="killModule_clickHandler(event)"/>
+    <s:VGroup width="100%" height="100%" verticalAlign="middle" horizontalAlign="center">
+        <s:Button id="doStuff" label="request" click="doStuff_clickHandler(event)"/>
+    </s:VGroup>
+</mx:Module>

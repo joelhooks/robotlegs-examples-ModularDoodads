@@ -13,6 +13,7 @@ package robotlegs.examples.modulardoodads.modules.logger.view
         override public function onRegister():void
         {
             eventMap.mapListener(moduleDispatcher, LoggingEvent.MESSAGE, handleLoggingeMessage);
+            trace("listening intently");
         }
         
         protected function handleLoggingeMessage(event:LoggingEvent):void

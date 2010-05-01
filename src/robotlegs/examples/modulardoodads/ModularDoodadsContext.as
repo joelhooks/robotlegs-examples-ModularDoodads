@@ -5,6 +5,7 @@ package robotlegs.examples.modulardoodads
     import org.robotlegs.core.IInjector;
     import org.robotlegs.utilities.modular.mvcs.ModuleContext;
     
+    import robotlegs.examples.modulardoodads.modules.doodad.DoodadModule;
     import robotlegs.examples.modulardoodads.modules.logger.LoggerModule;
     import robotlegs.examples.modulardoodads.view.ModuleDoodadsMediator;
     
@@ -19,9 +20,10 @@ package robotlegs.examples.modulardoodads
     {
         override public function startup():void
         {
-            //map the LoggerModule so that its instances will
-            //be properly injected with the injector.
+            //map the modules so that instances will be properly supplied (injected) with an injector.
             viewMap.mapType(LoggerModule);
+            viewMap.mapType(DoodadModule);
+            
             mediatorMap.mapView(ModularDoodads, ModuleDoodadsMediator);
         }
     }
