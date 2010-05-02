@@ -16,7 +16,6 @@ package robotlegs.examples.modulardoodads.view
         
         override public function onRegister():void
         {
-            addViewListener(LoggingEvent.MESSAGE, dispatchToModules);
             addViewListener(ModuleCommandTriggerEvent.TRIGGER_MODULE_COMMAND, dispatchToModules);
             addModuleListener(DoodadModuleEvent.REMOVE, handleDoodadRemoved);
         }

@@ -6,6 +6,7 @@ package robotlegs.examples.modulardoodads.modules.doodad.events
     {
         public static const DO_STUFF_REQUESTED:String = "doStuffRequested";
         public static const REMOVE:String = "doodadModule/remove";
+        public static const FLASH_YOUR_DOODAD:String = "flashYourDoodad";
         
         public function DoodadModuleEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false)
         {

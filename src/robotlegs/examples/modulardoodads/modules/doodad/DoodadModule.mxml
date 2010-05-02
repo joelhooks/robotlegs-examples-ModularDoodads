@@ -20,7 +20,10 @@
             [Bindable]
             public var color:uint = 0x000000;
             
+            protected var colorCache:uint;
+            
             protected var context:IModuleContext;
+            protected var flashTimer:Timer;
             
             /**
              * We need to initialize our context by setting the parent
@@ -48,7 +51,33 @@
                 if(parent && parent.contains(this))
                     IVisualElementContainer(parent).removeElement(this);
                 context.dispose();
-                context = null;           
+                context = null;       
+                flashTimer = null;
+            }
+            
+            public function flashIt():void
+            {
+                colorCache = color;
+                flashTimer = new Timer(50,4);
+                flashTimer.addEventListener(TimerEvent.TIMER, handleFlashTimer, false, 0, true);
+                flashTimer.addEventListener(TimerEvent.TIMER_COMPLETE, handleFlashTimerComplete, false, 0, true);
+                flashTimer.start();
+            }
+            
+            private function handleFlashTimer(event:TimerEvent):void
+            {
+                if(color == colorCache)
+                    color = 0xFF0000;
+                else
+                    color = colorCache;
+            }
+            
+            private function handleFlashTimerComplete(event:TimerEvent):void
+            {
+                flashTimer.removeEventListener(TimerEvent.TIMER, handleFlashTimer);
+                flashTimer.removeEventListener(TimerEvent.TIMER_COMPLETE, handleFlashTimerComplete);    
+                color = colorCache;
+                flashTimer = null;
             }
 
         ]]>

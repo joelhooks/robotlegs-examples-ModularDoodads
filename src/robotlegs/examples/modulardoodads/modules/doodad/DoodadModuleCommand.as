@@ -5,6 +5,7 @@ package robotlegs.examples.modulardoodads.modules.doodad
     
     import robotlegs.examples.modulardoodads.common.events.LoggingEvent;
     import robotlegs.examples.modulardoodads.common.events.ModuleCommandTriggerEvent;
+    import robotlegs.examples.modulardoodads.modules.doodad.events.DoodadModuleEvent;
     
     public class DoodadModuleCommand extends Command
     {
@@ -16,7 +17,8 @@ package robotlegs.examples.modulardoodads.modules.doodad
         
         override public function execute():void
         {
-            moduleDispatcher.dispatchEvent(new LoggingEvent(LoggingEvent.MESSAGE, "Module Command Executed!"));    
+            moduleDispatcher.dispatchEvent(new LoggingEvent(LoggingEvent.MESSAGE, "Module Command Executed!"));
+            dispatch(new DoodadModuleEvent(DoodadModuleEvent.FLASH_YOUR_DOODAD));
         }
     }
 }

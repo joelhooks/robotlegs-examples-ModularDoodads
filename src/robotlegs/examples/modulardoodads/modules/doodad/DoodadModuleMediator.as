@@ -1,5 +1,7 @@
 package robotlegs.examples.modulardoodads.modules.doodad
 {
+    import mx.managers.FocusManager;
+    
     import org.robotlegs.utilities.modular.mvcs.ModuleMediator;
     
     import robotlegs.examples.modulardoodads.common.events.LoggingEvent;
@@ -17,6 +19,7 @@ package robotlegs.examples.modulardoodads.modules.doodad
             addViewListener(DoodadModuleEvent.DO_STUFF_REQUESTED, handleDoStuffRequested, DoodadModuleEvent);
             addViewListener(DoodadModuleEvent.REMOVE, handleRemove);
             addModuleListener(DoodadModuleEvent.DO_STUFF_REQUESTED, handleDoStuffRequest, DoodadModuleEvent);
+            addContextListener(DoodadModuleEvent.FLASH_YOUR_DOODAD, handleDoodadFlashRequest);
         }
         
         private function handleRemove(event:DoodadModuleEvent):void
@@ -41,6 +44,11 @@ package robotlegs.examples.modulardoodads.modules.doodad
                 dispatchToModules(new LoggingEvent(LoggingEvent.MESSAGE, "DoodadModule changed color: " + view.color));
             }
             madeRequest = false;
+        }
+        
+        private function handleDoodadFlashRequest(event:DoodadModuleEvent):void
+        {
+            view.flashIt();
         }
     }
 }

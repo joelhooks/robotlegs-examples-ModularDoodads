@@ -3,27 +3,35 @@
            xmlns:s="library://ns.adobe.com/flex/spark"  
            xmlns:mx="library://ns.adobe.com/flex/mx"
            implements="org.robotlegs.utilities.modular.core.IModule"
-           layout="absolute" width="100%">
+           layout="absolute" width="100%" height="75">
     <fx:Script>
         <![CDATA[
             import org.robotlegs.core.IContext;
             import org.robotlegs.core.IInjector;
             import org.robotlegs.utilities.modular.core.IModule;
+            import org.robotlegs.utilities.modular.core.IModuleContext;
             
             import robotlegs.examples.modulardoodads.modules.logger.skins.LoggingTextArea;
             
-            protected var context:IContext;
+            protected var context:IModuleContext;
+ 
+            [Embed(mimeType='application/x-font', source="assets/AnonPro.ttf", fontName="Anon")]
+            private var anon:Class;
             
             [Bindable]
             public var messages:String = "";
             
             public function addLoggingMessage(message:String):void
             {
-                if(messages)
-                    messages += "\r";
+                message += "\r";
                 messages += message;
+                scrollToMax();
+            }
+            
+            private function scrollToMax():void
+            {
                 messageDisplay.validateNow();
-                messageDisplay.scroller.verticalScrollBar.value = messageDisplay.scroller.verticalScrollBar.maximum;
+                messageDisplay.scroller.verticalScrollBar.value = messageDisplay.scroller.verticalScrollBar.maximum;              
             }
             
             /**
@@ -37,10 +45,16 @@
                 context = new LoggerModuleContext(this, value);
             }
             
+            public function dispose():void
+            {
+                context.dispose();
+                context = null;
+            }
+            
         ]]>
     </fx:Script>
     <fx:Declarations>
         <!-- Place non-visual elements (e.g., services, value objects) here -->
     </fx:Declarations>
-    <s:TextArea id="messageDisplay" width="100%" text="{messages}" skinClass="robotlegs.examples.modulardoodads.modules.logger.skins.LoggingTextArea"/>
+    <s:TextArea id="messageDisplay" fontFamily="Anon" fontSize="12" width="100%" height="100%" text="{messages}" skinClass="robotlegs.examples.modulardoodads.modules.logger.skins.LoggingTextArea"/>
 </mx:Module>
